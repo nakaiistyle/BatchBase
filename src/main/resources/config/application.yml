@@ -1,0 +1,12 @@
+# Spring
+spring:
+# DB
+ datasource:
+  url: jdbc:mysql://localhost/sample
+  username: allsmart
+  password: asmt
+  driver-class-name: com.mysql.jdbc.Driver
+
+mybatis:
+ configuration:
+  map-underscore-to-camel-case: true
