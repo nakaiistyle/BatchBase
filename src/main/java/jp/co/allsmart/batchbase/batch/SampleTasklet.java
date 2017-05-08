@@ -1,5 +1,7 @@
 package jp.co.allsmart.batchbase.batch;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
@@ -12,13 +14,15 @@ import jp.co.allsmart.batchbase.service.SampleService;
 @Component
 public class SampleTasklet implements Tasklet {
 
+    private static final Logger logger = LoggerFactory.getLogger(SampleTasklet.class);
+
 	@Autowired
 	SampleService sampleService;
 
 	@Override
 	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
 
-		System.out.println("■ SampleTasklet execute Start");
+		logger.info("■ SampleTasklet execute Start");
 
 		try {
 			sampleService.execute();
@@ -28,7 +32,7 @@ public class SampleTasklet implements Tasklet {
 			e.printStackTrace();
 		}
 
-		System.out.println("■ SampleTasklet execute End");
+		logger.info("■ SampleTasklet execute End");
 
 		return RepeatStatus.FINISHED;
 	}
