@@ -1,10 +1,14 @@
 package jp.co.allsmart.batchbase.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
@@ -45,10 +49,16 @@ public class SampleService {
 
 		String url = "http://private-0c0ec-test13416.apiary-mock.com/test";
 
-		String request;
+		// HTTPヘッダ
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON_UTF8));
+		headers.setContentType(MediaType.TEXT_PLAIN);
 
+		String body;
 		// TODO:規定フォーマットでリクエストボディ作成
-		request = "test";
+		body = "test";
+
+		HttpEntity<String> request = new HttpEntity<String>(body, headers);
 
 		try {
 			ResponseEntity<HttpResponse> rsp = restTemplate.postForEntity(url, request, HttpResponse.class);

@@ -1,5 +1,6 @@
 package jp.co.allsmart.batchbase.core;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +8,7 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -32,6 +34,11 @@ public class RestTemplateConfig {
         MappingJackson2HttpMessageConverter jsonMessageConverter = new MappingJackson2HttpMessageConverter();
         jsonMessageConverter.setObjectMapper(jacksonObjectMapper());
         messageConverters.add(jsonMessageConverter);
+
+        // TEXT形式のコンバータ
+        StringHttpMessageConverter stringMessageConverter = new StringHttpMessageConverter(StandardCharsets.UTF_8);
+        stringMessageConverter.setWriteAcceptCharset(false);
+        messageConverters.add(stringMessageConverter);
 
         // RestTemplateを生成して返却。
         return new RestTemplateBuilder()
